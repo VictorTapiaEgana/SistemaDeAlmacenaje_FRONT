@@ -1,0 +1,7 @@
+@import "tailwindcss";
+/* @import "~ng-zorro-antd/ng-zorro-antd.min.css"; */
+
+body{
+    width: 100vw;
+    height: 100vh;
+}
