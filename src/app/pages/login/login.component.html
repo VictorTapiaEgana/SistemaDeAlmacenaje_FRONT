@@ -1,10 +1,33 @@
-<section class="w-full h-full flex justify-center items-center">
+<section class="w-full h-full flex justify-center items-center bg-cover bg-no-repeat bg-center" 
+         style="background-image: url('./fodo/back2.jpg');">
    
-    <section class="w-[360px] h-[400px] border-1 border-gray-400 rounded-2xl">
-        <h1 nz-typography class="text-center">Almacenaje</h1>
-        <h4 nz-typography class="text-center">Ingreso de usuarios</h4>
+    <section class="w-[360px] h-[400px] border-1 border-gray-400 rounded-2xl [backdrop-filter:blur(50px)]">
+        
+        <h1 nz-typography class="text-center py-5">Almacenaje</h1>        
+        
+        <form [formGroup]="userForm" (ngSubmit)="validarUsuario()" 
+              class="flex flex-col justify-center p-5 -mt-10 ">
+              <section>
+                <img src="./iconos/teamwork.png" alt="logo" class="mx-auto h-12 w-12" >
+                    <p class="text-center text-lg">Ingreso de usuarios</p>
+              </section>
+            
 
-    </section>
+            <nz-form-item>            
+                 <nz-form-control nzErrorTip="Ingrese un correo valido">
+                    <input type="text" nz-input placeholder="eduardo@test.cl" formControlName="correo">
+                 </nz-form-control>
+            </nz-form-item>
 
+            <nz-form-item>            
+                 <nz-form-control nzErrorTip="Ingrese constraseña (minimo 4 caracteres)">
+                    <input type="password" nz-input placeholder="contraseña" formControlName="pass">
+                 </nz-form-control>
+            </nz-form-item>
+            <small class="text-center text-black font-bold mb-2">{{ MenError() }}</small>
+            <button type="submit" nz-button nzType="primary" [disabled]="!userForm.valid">Ingresar</button>    
+        </form>
+
+    </section>    
     
 </section>

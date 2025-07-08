@@ -1,0 +1,36 @@
+<ul nz-menu nzMode="inline" style="width: 240px;">
+
+    <section class="mt-5 text-center">        
+        <h2 class="text-2xl text-center">ALMACENAJE</h2>        
+    </section>
+
+    <ul>
+      <li class="mx-6 my-3 mt-6">
+        <img [src]="listado[0].icon" [alt]="listado[0].name" class="w-8 h-8 inline-block mr-2" />
+        <span class="text-lg cursor-pointer" [routerLink]="listado[0].path" >{{ listado[0].name }}</span>
+      </li>
+    </ul>
+
+    @for (menu of listado.slice(1); track $index ) {        
+      
+        <ng-template #customTitle>
+            <img [src]="menu.icon" [alt]="menu.name" class="w-8 h-8 inline-block mr-2" />
+            {{ menu.name }}
+        </ng-template>         
+
+        <li nz-submenu [nzTitle]="customTitle" class="text-lg">                                      
+          <ul>
+             @for (item of menu.children; track $index) {
+
+               <li nz-menu-item [routerLink]="item.path">
+                  <img [src]="item.icon" [alt]="item.name" class="w-6 h-6 inline-block mr-2" />
+                  {{ item.name }}
+               </li>
+
+             }
+          </ul>                        
+        </li>         
+      
+     }  
+
+</ul>
