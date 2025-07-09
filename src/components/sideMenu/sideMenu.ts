@@ -30,7 +30,7 @@ const listado:SideMenuItem[] = [
                         {
                             "name": "Eliminar Producto",
                             "path": "eliminar-producto",
-                            "icon": "./iconos/trash.png",
+                             "icon": "./iconos/trash.png",
                            // "component": "DeleteProductComponent",
                         }],    
                         

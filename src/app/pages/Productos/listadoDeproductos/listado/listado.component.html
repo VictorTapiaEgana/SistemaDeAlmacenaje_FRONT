@@ -1,0 +1,47 @@
+<section class="p-10" >
+    <nz-table #nzTable [nzData]="listOfDisplayData" nzTableLayout="fixed" >
+              
+      <thead>
+        <tr>
+          <th nzCustomFilter>
+            Nombre
+            <nz-filter-trigger [(nzVisible)]="visible" [nzActive]="searchValue.length > 0" [nzDropdownMenu]="menu">
+              <nz-icon nzType="search" />
+            </nz-filter-trigger>
+          </th>
+          <th>Marca</th>
+          <th [nzFilters]="filterName()" [nzFilterFn]="nameFilterFn">categoria</th>          
+          <th>Empaque</th>
+          <th>U.Medida</th>
+          <th>C.Total</th>
+          <th>Rotacion</th>          
+          <th>Observaciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (data of nzTable.data; track data) {
+          <tr>
+            <td>{{ data.nombre }}</td> 
+            <td>{{ data.marca }}</td>
+            <td>{{ data.categoria.nombre }}</td>
+            <td>{{ data.modelo }}</td> 
+            <td>{{ data.unidad_medida }}</td> 
+            <td>{{ data.cantidad_total }}</td> 
+            <td>{{ data.nivel_rotacion }}</td> 
+            <td>{{ data.observaciones }}</td>
+          </tr>
+        }
+      </tbody>
+    </nz-table>
+
+    <nz-dropdown-menu #menu="nzDropdownMenu">
+      <div class="ant-table-filter-dropdown">
+        <div class="search-box">
+          <input type="text" nz-input placeholder="Buscar nombre" [(ngModel)]="searchValue" />
+          <button nz-button nzSize="small" nzType="primary" (click)="search()" class="search-button">Buscar</button>
+          <button nz-button nzSize="small" (click)="reset()">Limpiar</button>
+        </div>
+      </div>
+    </nz-dropdown-menu>
+
+</section>
