@@ -18,7 +18,8 @@ import { ProductoResponse } from '../../../../types/ProductoResponse.type';
 
 @Component({
   selector: 'app-listado',
-  imports: [NzDividerModule, NzTableModule, NzButtonModule, NzDropDownModule, NzIconModule, NzInputModule,FormsModule,NzTagModule],
+  imports: [ NzDividerModule, NzTableModule, NzButtonModule, NzDropDownModule, 
+             NzIconModule, NzInputModule,FormsModule,NzTagModule],
   templateUrl: './listado.component.html',
   styleUrl: './listado.component.css'
 })
