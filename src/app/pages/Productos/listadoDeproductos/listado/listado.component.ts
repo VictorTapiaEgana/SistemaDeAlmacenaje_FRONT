@@ -31,6 +31,17 @@ export class ListadoComponent implements OnInit, OnDestroy  {
   listOfData = signal<ProductoResponse[]>([])
   suscripcion: any;
 
+  estados = [{nombre:"Alta", valor: "success"},
+              {nombre:"Media", valor: "warning"},
+              {nombre:"Baja", valor: "error"}];
+
+ getColorFromNombre(nombre: string): string {
+
+   return this.estados.find(e => e.nombre === nombre)?.valor ?? 'default'; 
+
+ }
+
+
   searchValue = '';
   visible = false;
   listOfDisplayData: ProductoResponse[] = [];
@@ -46,12 +57,25 @@ export class ListadoComponent implements OnInit, OnDestroy  {
       .subscribe({
           
         next: (productos: ProductoResponse[]) => {
-              this.listOfData.set(productos)
+
+              this.listOfData.set(productos.sort((a, b) => a.nombre.localeCompare(b.nombre)));
               this.listOfDisplayData  = [...this.listOfData()];
-              this.filterName.set(this.listOfData().map((producto: ProductoResponse) => ({
-                                                                                         text: producto.categoria.nombre,
-                                                                                         value: producto.categoria.nombre
-                                                                                        })));
+              
+              // this.filterName.set(this.listOfData().map((producto: ProductoResponse) => ({
+              //                                                                            text: producto.categoria.nombre,
+              //                                                                            value: producto.categoria.nombre
+              //                                                                           }))
+              //                                       );
+              const categoriasUnicas = new Map<string, { text: string; value: string }>();
+
+              this.listOfData().forEach((producto: ProductoResponse) => {
+                const nombre = producto.categoria.nombre;
+                if (!categoriasUnicas.has(nombre)) {
+                  categoriasUnicas.set(nombre, { text: nombre, value: nombre });
+                }
+              });
+
+              this.filterName.set(Array.from(categoriasUnicas.values()));
         },
 
         error: (err:any) => console.error('Error al obtener productos', err)
@@ -71,8 +95,17 @@ export class ListadoComponent implements OnInit, OnDestroy  {
 
     this.listOfDisplayData = this.listOfData().filter((item: ProductoResponse) =>
       item.nombre.toLowerCase().includes(filtro)
-    );
+    ).sort((a, b) =>
+      a.nombre.localeCompare(b.nombre)) ;
   }
+
+  currentPage = signal<number>(1)
+
+  onPageChange(pageIndex: number): void {
+    
+    this.currentPage.set(pageIndex);
+    
+}
 
 
   ngOnInit() {

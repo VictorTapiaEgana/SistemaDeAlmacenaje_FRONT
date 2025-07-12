@@ -1,33 +1,48 @@
 <section class="p-10" >
-    <nz-table #nzTable [nzData]="listOfDisplayData" nzTableLayout="fixed" >
+
+  <h1 class="text-3xl text-center">Listado de productos</h1>
+
+    <nz-table #nzTable [nzData]="listOfDisplayData" 
+                       nzTableLayout="fixed" 
+                       nzShowPagination  
+                       [nzPageSize]="10"
+                        (nzPageIndexChange)="onPageChange($event)">
               
       <thead>
         <tr>
+          <th class="w-[70px]">#</th>
           <th nzCustomFilter>
-            Nombre
+            Nombre Producto
             <nz-filter-trigger [(nzVisible)]="visible" [nzActive]="searchValue.length > 0" [nzDropdownMenu]="menu">
               <nz-icon nzType="search" />
             </nz-filter-trigger>
           </th>
           <th>Marca</th>
-          <th [nzFilters]="filterName()" [nzFilterFn]="nameFilterFn">categoria</th>          
-          <th>Empaque</th>
-          <th>U.Medida</th>
-          <th>C.Total</th>
-          <th>Rotacion</th>          
+          <th [nzFilters]="filterName()" [nzFilterFn]="nameFilterFn">Categoría</th>          
+          <th class="w-[130px]">Empaque</th>
+          <th class="w-[110px]">Unidad Medida</th>
+          <th class="w-[90px]">Cantidad Total</th>
+          <th class="w-[90px]">Rotacion</th>          
           <th>Observaciones</th>
         </tr>
       </thead>
       <tbody>
-        @for (data of nzTable.data; track data) {
+        @for (data of nzTable.data; track data.id) {
           <tr>
+            <td>{{ $index + 1 + (nzTable.nzPageIndex - 1) * nzTable.nzPageSize}}</td>
             <td>{{ data.nombre }}</td> 
             <td>{{ data.marca }}</td>
             <td>{{ data.categoria.nombre }}</td>
             <td>{{ data.modelo }}</td> 
             <td>{{ data.unidad_medida }}</td> 
             <td>{{ data.cantidad_total }}</td> 
-            <td>{{ data.nivel_rotacion }}</td> 
+
+            <td>
+               <nz-tag [nzColor]="getColorFromNombre(data.nivel_rotacion)">
+                  {{ data.nivel_rotacion }}
+                </nz-tag>
+            </td> 
+
             <td>{{ data.observaciones }}</td>
           </tr>
         }
